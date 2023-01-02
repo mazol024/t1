@@ -20,6 +20,7 @@ func main() {
 				uint8(rand.Intn(255)), 0xff}
 		})
 	// raster := canvas.NewRasterFromImage()
+	// Next line
 	w.SetContent(raster)
 	w.Resize(fyne.NewSize(120, 100))
 	w.ShowAndRun()
