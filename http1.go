@@ -50,7 +50,8 @@ func main() {
 		}
 	}
 	fmt.Println(" Images2  :", len(images1))
-	printimg(images1, site)
+	// printimg(images1, site)
+	drawinghttp(images1, site)
 }
 func backsearch(s string) []string {
 	var rows []string

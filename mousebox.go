@@ -15,7 +15,7 @@ type CustomImage struct {
 }
 
 func (img *CustomImage) MouseIn(*desktop.MouseEvent) {
-	fmt.Println("Entered")
+	fmt.Println("Entered", img.Title, img.Subtitle)
 }
 
 func (img *CustomImage) MouseOut() {
@@ -37,7 +37,7 @@ func main() {
 	}
 	image.SetMinSize(fyne.NewSize(280, 280))
 
-	box := widget.NewCard("Title", "Sub", image)
+	box := widget.NewCard("File name :  ", "Sub", image)
 	// box := widget.NewHBox(image)
 	contentm := &CustomImage{*box}
 	// text1 := widget.NewLabel("Hello ")
