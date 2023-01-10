@@ -18,10 +18,13 @@ type CustomImagem struct {
 	widget.Card
 }
 
+func (img *CustomImagem) Tapped(ev *fyne.PointEvent) {
+	fmt.Println("Tapped x= ", ev.AbsolutePosition.X, "  y= ", ev.AbsolutePosition.Y)
+	fmt.Println("You choose: ", img.Subtitle)
+
+}
 func (img *CustomImagem) MouseIn(*desktop.MouseEvent) {
 	fmt.Println("Entered", img.Title, img.Subtitle)
-	img.Title = "Choosen "
-	w.Canvas().Refresh(img)
 }
 
 func (img *CustomImagem) MouseOut() {
@@ -50,12 +53,10 @@ func drawinghttp(images []string, site string) {
 		// }
 		// ppr = canvas.NewImageFromURI(storage.NewURI(i))
 		// image.SetMinSize(fyne.NewSize(280, 280))
-		img.SetMinSize(fyne.Size{64, 64})
+		img.SetMinSize(fyne.Size{72, 72})
+		img.FillMode = canvas.ImageFillOriginal
 		box := widget.NewCard("Image #"+strconv.Itoa(n), i, img)
 		contentm := &CustomImagem{*box}
-		// pp.FocusGained()
-		contentm.Resize(fyne.Size{64, 64})
-		// imgarr = append(imgarr, sim{img})
 		imgp = append(imgp, contentm)
 		if n == 25 {
 			break
@@ -65,8 +66,7 @@ func drawinghttp(images []string, site string) {
 	// box := widget.NewHBox(image)
 	// text1 := widget.NewLabel("Hello ")
 	// contentm := container.New(layout.NewHBoxLayout(), text1)
-	contentall := container.New(layout.NewGridLayout(5), imgp[:]...)
-	contentall.Resize(fyne.Size{1200, 900})
+	contentall := container.New(layout.NewGridLayout(4), imgp[:]...)
 	w.SetContent(contentall)
 	w.Resize(fyne.Size{980, 720})
 	w.RequestFocus()
