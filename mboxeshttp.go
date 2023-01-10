@@ -47,14 +47,9 @@ func drawinghttp(images []string, site string) {
 
 	for n, i := range images {
 		img := canvas.NewImageFromURI(storage.NewURI(i))
-		// image := &canvas.Image{
-		// 	File:     "1.png",
-		// 	FillMode: canvas.ImageFillOriginal,
-		// }
-		// ppr = canvas.NewImageFromURI(storage.NewURI(i))
-		// image.SetMinSize(fyne.NewSize(280, 280))
 		img.SetMinSize(fyne.Size{72, 72})
 		img.FillMode = canvas.ImageFillOriginal
+		// ttext := canvas.NewText("hello", color.Black)
 		box := widget.NewCard("Image #"+strconv.Itoa(n), i, img)
 		contentm := &CustomImagem{*box}
 		imgp = append(imgp, contentm)
