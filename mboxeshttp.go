@@ -20,6 +20,8 @@ type CustomImagem struct {
 
 func (img *CustomImagem) MouseIn(*desktop.MouseEvent) {
 	fmt.Println("Entered", img.Title, img.Subtitle)
+	img.Title = "Choosen "
+	w.Canvas().Refresh(img)
 }
 
 func (img *CustomImagem) MouseOut() {
@@ -52,6 +54,7 @@ func drawinghttp(images []string, site string) {
 		box := widget.NewCard("Image #"+strconv.Itoa(n), i, img)
 		contentm := &CustomImagem{*box}
 		// pp.FocusGained()
+		contentm.Resize(fyne.Size{64, 64})
 		// imgarr = append(imgarr, sim{img})
 		imgp = append(imgp, contentm)
 		if n == 25 {
@@ -63,8 +66,9 @@ func drawinghttp(images []string, site string) {
 	// text1 := widget.NewLabel("Hello ")
 	// contentm := container.New(layout.NewHBoxLayout(), text1)
 	contentall := container.New(layout.NewGridLayout(5), imgp[:]...)
+	contentall.Resize(fyne.Size{1200, 900})
 	w.SetContent(contentall)
-
+	w.Resize(fyne.Size{980, 720})
 	w.RequestFocus()
 	w.ShowAndRun()
 }
