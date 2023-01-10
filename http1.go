@@ -76,9 +76,6 @@ func backsearch(s string) []string {
 func notin(i string, images []string) bool {
 	// func notin(i fyne.URI, images []fyne.URI) bool {
 	for _, p := range images {
-		// if len(p.String()) > 100 {
-		// 	return false
-		// }
 		if p == i {
 			fmt.Println(" Duble  :", i)
 			return false
