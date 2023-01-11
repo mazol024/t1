@@ -11,9 +11,9 @@ func main() {
 	var images []string
 	// var images []fyne.URI
 	urls := []string{
+		"https://www.eatliver.com/",
 		"https://fishki.net",
 		"https://thechive.com/category/humor/funny-pictures/",
-		"https://www.eatliver.com/",
 		"https://www.freepik.com",
 		"https://lenta.ru",
 		"https://rbc.ru",

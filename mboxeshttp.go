@@ -10,19 +10,20 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/driver/desktop"
-	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/storage"
 	"fyne.io/fyne/v2/widget"
 )
 
 type CustomImagem struct {
 	widget.Card
+	link1 string
 }
 
 func (img *CustomImagem) Tapped(ev *fyne.PointEvent) {
 	fmt.Println("Tapped x= ", ev.AbsolutePosition.X, "  y= ", ev.AbsolutePosition.Y)
 	fmt.Println("You choose: ", img.Subtitle)
-	showPic(img.Subtitle)
+	showPic(img.link1)
+	// showPic(img.Subtitle)
 	// w.Canvas().Content().Refresh()
 	// contentall.Refresh()
 	// contentall.Show()
@@ -54,11 +55,12 @@ func drawinghttp(images []string, site string) {
 
 	for n, i := range images {
 		img1 = canvas.NewImageFromURI(storage.NewURI(i))
-		img1.SetMinSize(fyne.Size{172, 172})
 		// img1.FillMode = canvas.ImageFillOriginal
+		img1.SetMinSize(fyne.Size{64, 64})
 		// ttext := canvas.NewText("hello", color.Black)
-		box := widget.NewCard("# "+strconv.Itoa(n), i, img1)
-		contentm = &CustomImagem{*box}
+		box := widget.NewCard("", "#"+strconv.Itoa(n), img1)
+		contentm = &CustomImagem{*box, i}
+		// contentm.Resize(fyne.Size{320, 320})
 		imgp = append(imgp, contentm)
 		if n == 15 {
 			break
@@ -68,8 +70,11 @@ func drawinghttp(images []string, site string) {
 	// box := widget.NewHBox(image)
 	// text1 := widget.NewLabel("Hello ")
 	// contentm := container.New(layout.NewHBoxLayout(), text1)
-	contentall = container.New(layout.NewGridLayout(4), imgp[:]...)
-	w.SetContent(contentall)
+	// contentall = container.New(layout.NewGridLayout(4), imgp[:]...)
+	contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp[:]...)
+	scroll1 := container.NewScroll(contentall)
+
+	w.SetContent(scroll1)
 	w.Resize(fyne.Size{980, 720})
 	w.RequestFocus()
 	w.ShowAndRun()
@@ -83,8 +88,10 @@ func showPic(i string) {
 	// p.FillMode = canvas.ImageFillOriginal
 	// i.Image.SetMinSize(fyne.Size{600, 600})
 	// d := dialog.NewCustom("Picture", "Close", &(*i.Image), w)
-	d := dialog.NewCustom("Picture", "Close", canvas.NewImageFromURI(storage.NewURI(i)), w)
+	img2 := canvas.NewImageFromURI(storage.NewURI(i))
+	d := dialog.NewCustom("Picture", "Close", img2, w)
 	// i.Image.FillMode = canvas.ImageFillContain
+	img2.FillMode = canvas.ImageFillOriginal
 
 	d.Resize(fyne.Size{1200, 980})
 	// d := dialog.NewCustom("Picture", "Close", p, w)
