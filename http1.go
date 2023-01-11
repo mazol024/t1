@@ -11,11 +11,15 @@ func main() {
 	var images []string
 	// var images []fyne.URI
 	urls := []string{
+		"https://www.anekdot.ru/random/mem/",
+		"https://www.anekdot.ru/last/mem/",
+		"https://fishki.net/tag/sssr/",
+		"https://fishki.net/tag/smeshnye-kartinki/",
 		"https://www.eatliver.com/",
-		"https://fishki.net",
-		"https://thechive.com/category/humor/funny-pictures/",
-		"https://www.freepik.com",
 		"https://lenta.ru",
+		"https://thechive.com/category/humor/funny-pictures/",
+		"https://fishki.net",
+		"https://www.freepik.com",
 		"https://rbc.ru",
 	}
 	site := urls[0]

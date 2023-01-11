@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 
 	"fyne.io/fyne/v2"
@@ -20,8 +19,8 @@ type CustomImagem struct {
 }
 
 func (img *CustomImagem) Tapped(ev *fyne.PointEvent) {
-	fmt.Println("Tapped x= ", ev.AbsolutePosition.X, "  y= ", ev.AbsolutePosition.Y)
-	fmt.Println("You choose: ", img.Subtitle)
+	// fmt.Println("Tapped x= ", ev.AbsolutePosition.X, "  y= ", ev.AbsolutePosition.Y)
+	// fmt.Println("You choose: ", img.Subtitle)
 	showPic(img.link1)
 	// showPic(img.Subtitle)
 	// w.Canvas().Content().Refresh()
@@ -29,11 +28,11 @@ func (img *CustomImagem) Tapped(ev *fyne.PointEvent) {
 	// contentall.Show()
 }
 func (img *CustomImagem) MouseIn(*desktop.MouseEvent) {
-	fmt.Println("Entered", img.Title, img.Subtitle)
+	// fmt.Println("Entered", img.Title, img.Subtitle)
 }
 
 func (img *CustomImagem) MouseOut() {
-	fmt.Println("Exited")
+	// fmt.Println("Exited")
 }
 
 func (img *CustomImagem) MouseMoved(*desktop.MouseEvent) {
@@ -62,7 +61,7 @@ func drawinghttp(images []string, site string) {
 		contentm = &CustomImagem{*box, i}
 		// contentm.Resize(fyne.Size{320, 320})
 		imgp = append(imgp, contentm)
-		if n == 15 {
+		if n == 30 {
 			break
 		}
 	}
