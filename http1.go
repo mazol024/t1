@@ -12,7 +12,7 @@ func makePicsList(site string) []string {
 	// site := siteselect(urls)
 	type c http.Client
 	resp, _ := http.Get(site)
-	var rows []string
+	var rows = []string{}
 
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
@@ -27,21 +27,22 @@ func makePicsList(site string) []string {
 
 	rows = backsearch(page1)
 	// fmt.Println("rows befor check", len(rows))
+	images1 := []string{}
 	for _, i := range rows {
 		i = i[strings.Index(i, "http"):]
-		images = append(images, i)
+		images1 = append(images1, i)
 	}
 	// fmt.Println("Total images : ", len(images))
-	var images1 []string
 	// var images1 []fyne.URI
-	for _, i := range images {
+	images2 := []string{}
+	for _, i := range images1 {
 		// fmt.Println(i.String())
-		if notin(i, images1) {
-			images1 = append(images1, i)
+		if notin(i, images2) {
+			images2 = append(images2, i)
 		}
 	}
-	fmt.Println("Total images : ", len(images1))
-	return images1
+	fmt.Println("Total images : ", len(images2))
+	return images2
 	// printimg(images1, site)
 	// drawinghttp(images1, site)
 }
@@ -69,7 +70,7 @@ func notin(i string, images []string) bool {
 	// func notin(i fyne.URI, images []fyne.URI) bool {
 	for _, p := range images {
 		if p == i {
-			fmt.Println(" Duble  :", i)
+			fmt.Println(" Doubles  :", i)
 			return false
 		}
 	}

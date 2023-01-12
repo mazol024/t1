@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 
 	"fyne.io/fyne/v2"
@@ -17,9 +18,6 @@ import (
 type CustomImagem struct {
 	widget.Card
 	link1 string
-}
-type Myselect struct {
-	widget.SelectEntry
 }
 
 func (img *CustomImagem) Tapped(ev *fyne.PointEvent) {
@@ -42,33 +40,6 @@ func (img *CustomImagem) MouseOut() {
 func (img *CustomImagem) MouseMoved(*desktop.MouseEvent) {
 
 }
-func (a *Myselect) Tapped() {
-
-	indexS := selectEntry1.SelectedText()
-	images = makePicsList(indexS)
-	for n, i := range images {
-		img1 = canvas.NewImageFromURI(storage.NewURI(i))
-		// img1.FillMode = canvas.ImageFillOriginal
-		img1.SetMinSize(fyne.Size{64, 64})
-		// ttext := canvas.NewText("hello", color.Black)
-		box := widget.NewCard("", "#"+strconv.Itoa(n), img1)
-		contentm = &CustomImagem{*box, i}
-		// contentm.Resize(fyne.Size{320, 320})
-		imgp = append(imgp, contentm)
-		if n == 30 {
-			break
-		}
-	}
-
-	// box := widget.NewHBox(image)
-	// text1 := widget.NewLabel("Hello ")
-	// contentm := container.New(layout.NewHBoxLayout(), text1)
-	// contentall = container.New(layout.NewGridLayout(4), imgp[:]...)
-	contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp[:]...)
-	scroll1 := container.NewScroll(contentall)
-	w.SetContent(scroll1)
-	w.Content().Refresh()
-}
 
 var images []string
 var appm fyne.App
@@ -78,9 +49,10 @@ var img1 *canvas.Image
 var contentm *CustomImagem
 var contentall *fyne.Container
 var contentlist *fyne.Container
+var contenLast *container.Split
 var urls = []string{
-	"https://www.anekdot.ru/last/mem/",
 	"https://www.anekdot.ru/random/mem/",
+	"https://www.anekdot.ru/last/mem/",
 	"https://fishki.net/tag/sssr/",
 	"https://fishki.net/tag/smeshnye-kartinki/",
 	"https://www.eatliver.com/",
@@ -88,22 +60,80 @@ var urls = []string{
 	"https://fishki.net",
 	"https://www.freepik.com",
 }
-var selectEntry1 *Myselect
-
-// var imgp []CustomImagem
+var indexS string
 
 func main() {
 	// var images []fyne.URI
 
 	appm = app.New()
 	w = appm.NewWindow("App")
-	selectEntry1 = &Myselect{*widget.NewSelectEntry(urls)}
-	selectEntry1.SetPlaceHolder("Type / Choose ")
+	indexS = urls[0]
+	selectEntry1 := widget.NewSelect(urls, func(s string) {
+		indexS = s
+		fmt.Println("Choosen", indexS)
+
+		images := makePicsList(indexS)
+		imgp := []fyne.CanvasObject{}
+		for n, i := range images {
+			img1 := canvas.NewImageFromURI(storage.NewURI(i))
+			// img1.FillMode = canvas.ImageFillOriginal
+			img1.SetMinSize(fyne.Size{64, 64})
+			// ttext := canvas.NewText("hello", color.Black)
+			box := widget.NewCard("", "#"+strconv.Itoa(n), img1)
+			contentm := &CustomImagem{*box, i}
+			// contentm.Resize(fyne.Size{320, 320})
+			imgp = append(imgp, contentm)
+			if n == 30 {
+				break
+			}
+		}
+		contentall = nil
+		contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp[:]...)
+		scroll1 := container.NewScroll(contentall)
+		scroll1.SetMinSize(fyne.Size{980, 640})
+		// contenLast := container.NewVSplit(contentlist, scroll1)
+		// scroll1.SetMinSize(fyne.Size{980, 640})
+		contenLast = nil
+		contenLast = container.NewVSplit(contentlist, scroll1)
+		// scroll1.SetMinSize(fyne.Size{980, 640})
+		contentlist.Show()
+		w.SetContent(contenLast)
+		w.Content().Refresh()
+	})
+
 	contentlist = container.New(layout.NewVBoxLayout(), selectEntry1)
 
-	w.SetContent(contentlist)
+	images = makePicsList(indexS)
+	imgp1 := []fyne.CanvasObject{}
+	for n, i := range images {
+		img1 = canvas.NewImageFromURI(storage.NewURI(i))
+		// img1.FillMode = canvas.ImageFillOriginal
+		img1.SetMinSize(fyne.Size{64, 64})
+		// ttext := canvas.NewText("hello", color.Black)
+		box := widget.NewCard("", "#"+strconv.Itoa(n), img1)
+		contentm = &CustomImagem{*box, i}
+		// contentm.Resize(fyne.Size{320, 320})
+		imgp1 = append(imgp1, contentm)
+		if n == 30 {
+			break
+		}
+	}
+
+	// box := widget.NewHBox(image)
+	// text1 := widget.NewLabel("Hello ")
+	// contentm := container.New(layout.NewHBoxLayout(), text1)
+	// contentall = container.New(layout.NewGridLayout(4), imgp[:]...)
+	contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp1[:]...)
+	scroll1 := container.NewScroll(contentall)
+	scroll1.SetMinSize(fyne.Size{980, 640})
+	contenLast = container.NewVSplit(contentlist, scroll1)
+	// scroll1.SetMinSize(fyne.Size{980, 640})
+	contentlist.Show()
+	w.SetContent(contenLast)
+
 	w.Resize(fyne.Size{980, 720})
 	w.RequestFocus()
+	w.Content().Refresh()
 	w.ShowAndRun()
 
 }
