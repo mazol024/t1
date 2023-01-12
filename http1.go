@@ -7,22 +7,9 @@ import (
 	"strings"
 )
 
-func main() {
-	var images []string
-	// var images []fyne.URI
-	urls := []string{
-		"https://www.anekdot.ru/random/mem/",
-		"https://www.anekdot.ru/last/mem/",
-		"https://fishki.net/tag/sssr/",
-		"https://fishki.net/tag/smeshnye-kartinki/",
-		"https://www.eatliver.com/",
-		"https://lenta.ru",
-		"https://thechive.com/category/humor/funny-pictures/",
-		"https://fishki.net",
-		"https://www.freepik.com",
-		"https://rbc.ru",
-	}
-	site := urls[0]
+func makePicsList(site string) []string {
+
+	// site := siteselect(urls)
 	type c http.Client
 	resp, _ := http.Get(site)
 	var rows []string
@@ -39,12 +26,12 @@ func main() {
 	page1 := string(body)
 
 	rows = backsearch(page1)
-	fmt.Println("rows befor check", len(rows))
+	// fmt.Println("rows befor check", len(rows))
 	for _, i := range rows {
 		i = i[strings.Index(i, "http"):]
 		images = append(images, i)
 	}
-	fmt.Println("rows after check", len(images))
+	// fmt.Println("Total images : ", len(images))
 	var images1 []string
 	// var images1 []fyne.URI
 	for _, i := range images {
@@ -53,9 +40,10 @@ func main() {
 			images1 = append(images1, i)
 		}
 	}
-	fmt.Println(" Images2  :", len(images1))
+	fmt.Println("Total images : ", len(images1))
+	return images1
 	// printimg(images1, site)
-	drawinghttp(images1, site)
+	// drawinghttp(images1, site)
 }
 func backsearch(s string) []string {
 	var rows []string

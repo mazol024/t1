@@ -9,6 +9,7 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/driver/desktop"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/storage"
 	"fyne.io/fyne/v2/widget"
 )
@@ -16,6 +17,9 @@ import (
 type CustomImagem struct {
 	widget.Card
 	link1 string
+}
+type Myselect struct {
+	widget.SelectEntry
 }
 
 func (img *CustomImagem) Tapped(ev *fyne.PointEvent) {
@@ -38,20 +42,10 @@ func (img *CustomImagem) MouseOut() {
 func (img *CustomImagem) MouseMoved(*desktop.MouseEvent) {
 
 }
+func (a *Myselect) Tapped() {
 
-var appm fyne.App
-var w fyne.Window
-var imgp []fyne.CanvasObject
-var img1 *canvas.Image
-var contentm *CustomImagem
-var contentall *fyne.Container
-
-// var imgp []CustomImagem
-
-func drawinghttp(images []string, site string) {
-	appm = app.New()
-	w = appm.NewWindow("test-image")
-
+	indexS := selectEntry1.SelectedText()
+	images = makePicsList(indexS)
 	for n, i := range images {
 		img1 = canvas.NewImageFromURI(storage.NewURI(i))
 		// img1.FillMode = canvas.ImageFillOriginal
@@ -72,11 +66,46 @@ func drawinghttp(images []string, site string) {
 	// contentall = container.New(layout.NewGridLayout(4), imgp[:]...)
 	contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp[:]...)
 	scroll1 := container.NewScroll(contentall)
-
 	w.SetContent(scroll1)
+	w.Content().Refresh()
+}
+
+var images []string
+var appm fyne.App
+var w fyne.Window
+var imgp []fyne.CanvasObject
+var img1 *canvas.Image
+var contentm *CustomImagem
+var contentall *fyne.Container
+var contentlist *fyne.Container
+var urls = []string{
+	"https://www.anekdot.ru/last/mem/",
+	"https://www.anekdot.ru/random/mem/",
+	"https://fishki.net/tag/sssr/",
+	"https://fishki.net/tag/smeshnye-kartinki/",
+	"https://www.eatliver.com/",
+	"https://thechive.com/category/humor/funny-pictures/",
+	"https://fishki.net",
+	"https://www.freepik.com",
+}
+var selectEntry1 *Myselect
+
+// var imgp []CustomImagem
+
+func main() {
+	// var images []fyne.URI
+
+	appm = app.New()
+	w = appm.NewWindow("App")
+	selectEntry1 = &Myselect{*widget.NewSelectEntry(urls)}
+	selectEntry1.SetPlaceHolder("Type / Choose ")
+	contentlist = container.New(layout.NewVBoxLayout(), selectEntry1)
+
+	w.SetContent(contentlist)
 	w.Resize(fyne.Size{980, 720})
 	w.RequestFocus()
 	w.ShowAndRun()
+
 }
 func showPic(i string) {
 	// ii := canvas.NewImageFromFile("1.png")
@@ -88,7 +117,7 @@ func showPic(i string) {
 	// i.Image.SetMinSize(fyne.Size{600, 600})
 	// d := dialog.NewCustom("Picture", "Close", &(*i.Image), w)
 	img2 := canvas.NewImageFromURI(storage.NewURI(i))
-	d := dialog.NewCustom("Picture", "Close", img2, w)
+	d := dialog.NewCustom(i, "Close", img2, w)
 	// i.Image.FillMode = canvas.ImageFillContain
 	img2.FillMode = canvas.ImageFillOriginal
 
