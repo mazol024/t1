@@ -52,13 +52,13 @@ var contentlist *fyne.Container
 var contenLast *container.Split
 var urls = []string{
 	"https://www.anekdot.ru/random/mem/",
-	"https://www.anekdot.ru/last/mem/",
-	"https://fishki.net/tag/sssr/",
-	"https://fishki.net/tag/smeshnye-kartinki/",
+	"https://www.pinterest.com/bluechipentertainment/funny-pics/",
 	"https://www.eatliver.com/",
 	"https://thechive.com/category/humor/funny-pictures/",
-	"https://fishki.net",
-	"https://www.freepik.com",
+	"https://stock.adobe.com/nz/search?k=funny",
+	"https://prykoly.ru/category/memy/?filter_by=random_posts",
+	"https://gigi.click/fresh",
+	"https://gigi.click/best",
 }
 var indexS string
 

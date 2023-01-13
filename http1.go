@@ -63,6 +63,7 @@ func backsearch(s string) []string {
 		rows = append(rows, ss)
 		s = s[endp+4:]
 		i = len(s)
+		fmt.Println("--: ", ss)
 	}
 	return rows
 }
@@ -70,7 +71,7 @@ func notin(i string, images []string) bool {
 	// func notin(i fyne.URI, images []fyne.URI) bool {
 	for _, p := range images {
 		if p == i {
-			fmt.Println(" Doubles  :", i)
+			// fmt.Println(" Doubles  :", i)
 			return false
 		}
 	}
