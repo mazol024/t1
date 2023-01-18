@@ -63,36 +63,27 @@ var urls = []string{
 var indexS string
 
 func main() {
-	// var images []fyne.URI
-
 	appm = app.New()
 	w = appm.NewWindow("App")
 
 	urls := getThemes()
-	// indexS = urls[0]
 	keys := []string{}
 	for k, _ := range urls {
 		keys = append(keys, k)
 	}
 	selectEntry1 := widget.NewSelect(keys, func(s string) {
-		// selectEntry1 := widget.NewSelect(urls, func(s string) {
 		indexS = urls[s]
-		// indexS = s
 		fmt.Println("Choosen", indexS)
 
 		images := runHttp3(indexS)
-		// images := makePicsList(indexS)
 		imgp := []fyne.CanvasObject{}
 		for n, i := range images {
 			img1 := canvas.NewImageFromURI(storage.NewURI(i))
-			// img1.FillMode = canvas.ImageFillOriginal
 			img1.SetMinSize(fyne.Size{64, 64})
-			// ttext := canvas.NewText("hello", color.Black)
 			box := widget.NewCard("", "#"+strconv.Itoa(n), img1)
 			contentm := &CustomImagem{*box, i}
-			// contentm.Resize(fyne.Size{320, 320})
 			imgp = append(imgp, contentm)
-			if n == 30 {
+			if n == 20 {
 				break
 			}
 		}
@@ -100,11 +91,8 @@ func main() {
 		contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp[:]...)
 		scroll1 := container.NewScroll(contentall)
 		scroll1.SetMinSize(fyne.Size{980, 640})
-		// contenLast := container.NewVSplit(contentlist, scroll1)
-		// scroll1.SetMinSize(fyne.Size{980, 640})
 		contenLast = nil
 		contenLast = container.NewVSplit(contentlist, scroll1)
-		// scroll1.SetMinSize(fyne.Size{980, 640})
 		contentlist.Show()
 		w.SetContent(contenLast)
 		w.Content().Refresh()
@@ -113,31 +101,22 @@ func main() {
 	contentlist = container.New(layout.NewVBoxLayout(), selectEntry1)
 
 	images = runHttp3(indexS)
-	// images = makePicsList(indexS)
 	imgp1 := []fyne.CanvasObject{}
 	for n, i := range images {
 		img1 = canvas.NewImageFromURI(storage.NewURI(i))
-		// img1.FillMode = canvas.ImageFillOriginal
 		img1.SetMinSize(fyne.Size{64, 64})
-		// ttext := canvas.NewText("hello", color.Black)
 		box := widget.NewCard("", "#"+strconv.Itoa(n), img1)
 		contentm = &CustomImagem{*box, i}
-		// contentm.Resize(fyne.Size{320, 320})
 		imgp1 = append(imgp1, contentm)
-		if n == 30 {
+		if n == 20 {
 			break
 		}
 	}
 
-	// box := widget.NewHBox(image)
-	// text1 := widget.NewLabel("Hello ")
-	// contentm := container.New(layout.NewHBoxLayout(), text1)
-	// contentall = container.New(layout.NewGridLayout(4), imgp[:]...)
 	contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp1[:]...)
 	scroll1 := container.NewScroll(contentall)
 	scroll1.SetMinSize(fyne.Size{980, 640})
 	contenLast = container.NewVSplit(contentlist, scroll1)
-	// scroll1.SetMinSize(fyne.Size{980, 640})
 	contentlist.Show()
 	w.SetContent(contenLast)
 
@@ -148,28 +127,10 @@ func main() {
 
 }
 func showPic(i string) {
-	// ii := canvas.NewImageFromFile("1.png")
-	// ii := i.Image
-	// p := container.New(layout.NewMaxLayout(), i.Image)
-
-	// p.Resize(fyne.Size{220, 220})
-	// p.FillMode = canvas.ImageFillOriginal
-	// i.Image.SetMinSize(fyne.Size{600, 600})
-	// d := dialog.NewCustom("Picture", "Close", &(*i.Image), w)
 	img2 := canvas.NewImageFromURI(storage.NewURI(i))
 	d := dialog.NewCustom(i, "Close", img2, w)
-	// i.Image.FillMode = canvas.ImageFillContain
 	img2.FillMode = canvas.ImageFillOriginal
-
 	d.Resize(fyne.Size{1200, 980})
-	// d := dialog.NewCustom("Picture", "Close", p, w)
-	// d.SetOnClosed(w.Content().Refresh)
-	// d.SetOnClosed(w.Canvas().Content().Refresh)
-
 	d.Show()
-	// w.SetContent(contentall)
-	// w.Resize(fyne.Size{980, 720})
 	w.RequestFocus()
-	// contentall.Refresh()
-	// contentall.Show()
 }
