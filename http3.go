@@ -22,18 +22,31 @@ func main() {
 		fmt.Println(e.Text)
 	})
 
-	c.OnHTML(".content__text  ",
+	c.OnHTML(".content__title",
 		func(e *colly.HTMLElement) {
-			title := e.ChildText(".paragraph  ")
-			// title := e.ChildAttr("a", "href")
 			// price := e.Text
-			// price := e.ChildAttr("img", "href")
-			// price := e.ChildText("img")
+			price := e.ChildText("a span")
+			title := e.ChildAttr("a", "href")
+			fmt.Println(price)
 			fmt.Println(title)
+			fmt.Println("+++++++++")
+
+		})
+	c.OnHTML(".picture-relative",
+		func(e *colly.HTMLElement) {
+			// price := e.Text
+			// price := e.ChildText("a")
+			price1 := e.ChildAttr("img", "src")
+			price2 := e.ChildAttr("img", "alt")
+			// price := e.Attr("src")
+
 			// fmt.Println(price)
+			fmt.Println(price1)
+			fmt.Println(price2)
 		})
 
-	c.Visit("https://fishki.net")
+	// c.Visit("https://fishki.net/4340457-foto-zabroshennogo-boinga-kotoryj-prevratili-v-krutuju-villu.html")
+	c.Visit("https://fishki.net/auto/4340490-podborka-jumora-dlja-avtoljubitelej.html")
 	// printimg(images1, site)
 	// drawinghttp(images1, site)
 }
