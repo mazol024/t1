@@ -72,7 +72,8 @@ func main() {
 		indexS = s
 		fmt.Println("Choosen", indexS)
 
-		images := makePicsList(indexS)
+		images := runHttp3()
+		// images := makePicsList(indexS)
 		imgp := []fyne.CanvasObject{}
 		for n, i := range images {
 			img1 := canvas.NewImageFromURI(storage.NewURI(i))
@@ -103,7 +104,8 @@ func main() {
 
 	contentlist = container.New(layout.NewVBoxLayout(), selectEntry1)
 
-	images = makePicsList(indexS)
+	images = runHttp3()
+	// images = makePicsList(indexS)
 	imgp1 := []fyne.CanvasObject{}
 	for n, i := range images {
 		img1 = canvas.NewImageFromURI(storage.NewURI(i))
