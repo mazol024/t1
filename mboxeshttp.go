@@ -67,12 +67,16 @@ func main() {
 
 	appm = app.New()
 	w = appm.NewWindow("App")
-	indexS = urls[0]
+
+	urls := getThemes()
+	// indexS = urls[0]
+
 	selectEntry1 := widget.NewSelect(urls, func(s string) {
 		indexS = s
 		fmt.Println("Choosen", indexS)
 
-		images := makePicsList(indexS)
+		images := runHttp3(indexS)
+		// images := makePicsList(indexS)
 		imgp := []fyne.CanvasObject{}
 		for n, i := range images {
 			img1 := canvas.NewImageFromURI(storage.NewURI(i))
@@ -103,7 +107,8 @@ func main() {
 
 	contentlist = container.New(layout.NewVBoxLayout(), selectEntry1)
 
-	images = makePicsList(indexS)
+	images = runHttp3(indexS)
+	// images = makePicsList(indexS)
 	imgp1 := []fyne.CanvasObject{}
 	for n, i := range images {
 		img1 = canvas.NewImageFromURI(storage.NewURI(i))

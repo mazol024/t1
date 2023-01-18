@@ -2,12 +2,31 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/gocolly/colly"
 )
 
-func main() {
+func getThemes() []string {
+	myarrya := []string{}
+	// myarrya := []string{}
+	c := colly.NewCollector(colly.AllowedDomains("fishki.net"))
 
+	c.OnHTML(".content__title",
+		func(e *colly.HTMLElement) {
+			title := e.ChildText("a")
+			themhr := e.ChildAttr("a", "href")
+			if strings.Contains(themhr, "html") {
+				myarrya = append(myarrya, themhr)
+				fmt.Println(title)
+				fmt.Println(themhr)
+			}
+		})
+	c.Visit("https://fishki.net")
+	return myarrya
+}
+func runHttp3(visit string) []string {
+	myarray := []string{}
 	c := colly.NewCollector(colly.AllowedDomains("fishki.net"))
 
 	c.OnRequest(func(r *colly.Request) {
@@ -22,31 +41,29 @@ func main() {
 		fmt.Println(e.Text)
 	})
 
-	c.OnHTML(".content__title",
+	c.OnHTML(".paragraph",
 		func(e *colly.HTMLElement) {
-			// price := e.Text
-			price := e.ChildText("a span")
-			title := e.ChildAttr("a", "href")
-			fmt.Println(price)
-			fmt.Println(title)
+			prgph := e.Text
+			fmt.Println(prgph)
 			fmt.Println("+++++++++")
-
 		})
+
 	c.OnHTML(".picture-relative",
 		func(e *colly.HTMLElement) {
-			// price := e.Text
-			// price := e.ChildText("a")
-			price1 := e.ChildAttr("img", "src")
-			price2 := e.ChildAttr("img", "alt")
-			// price := e.Attr("src")
+			adrw := e.ChildAttr("a", "href")
+			themw := e.ChildAttr("img", "alt")
+			fmt.Println(adrw)
+			fmt.Println(themw)
+			if strings.Contains(adrw, ".jpg") || strings.Contains(adrw, ".png") {
+				myarray = append(myarray, adrw)
+			} else if strings.Contains(adrw, ".html") {
+				myarray = append(myarray, "https://fishki.net"+adrw)
 
-			// fmt.Println(price)
-			fmt.Println(price1)
-			fmt.Println(price2)
+			}
 		})
 
-	// c.Visit("https://fishki.net/4340457-foto-zabroshennogo-boinga-kotoryj-prevratili-v-krutuju-villu.html")
-	c.Visit("https://fishki.net/auto/4340490-podborka-jumora-dlja-avtoljubitelej.html")
-	// printimg(images1, site)
-	// drawinghttp(images1, site)
+	c.Visit("https://fishki.net" + visit)
+	// c.Visit("https://fishki.net/4340725-zachem-nuzhny-byli-chepchiki-dlja-sna.html")
+
+	return myarray
 }
