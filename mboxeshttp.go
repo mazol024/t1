@@ -70,9 +70,14 @@ func main() {
 
 	urls := getThemes()
 	// indexS = urls[0]
-
-	selectEntry1 := widget.NewSelect(urls, func(s string) {
-		indexS = s
+	keys := []string{}
+	for k, _ := range urls {
+		keys = append(keys, k)
+	}
+	selectEntry1 := widget.NewSelect(keys, func(s string) {
+		// selectEntry1 := widget.NewSelect(urls, func(s string) {
+		indexS = urls[s]
+		// indexS = s
 		fmt.Println("Choosen", indexS)
 
 		images := runHttp3(indexS)

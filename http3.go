@@ -7,8 +7,8 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func getThemes() []string {
-	myarrya := []string{}
+func getThemes() map[string]string {
+	myarrya := map[string]string{}
 	// myarrya := []string{}
 	c := colly.NewCollector(colly.AllowedDomains("fishki.net"))
 
@@ -17,7 +17,8 @@ func getThemes() []string {
 			title := e.ChildText("a")
 			themhr := e.ChildAttr("a", "href")
 			if strings.Contains(themhr, "html") {
-				myarrya = append(myarrya, themhr)
+				// myarrya = append(myarrya, themhr)
+				myarrya[title] = themhr
 				fmt.Println(title)
 				fmt.Println(themhr)
 			}
