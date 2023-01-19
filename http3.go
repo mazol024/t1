@@ -7,7 +7,26 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func runHttp3() []string {
+func getThemes() map[string]string {
+	myarrya := map[string]string{}
+	// myarrya := []string{}
+	c := colly.NewCollector(colly.AllowedDomains("fishki.net"))
+
+	c.OnHTML(".content__title",
+		func(e *colly.HTMLElement) {
+			title := e.ChildText("a")
+			themhr := e.ChildAttr("a", "href")
+			if strings.Contains(themhr, "html") {
+				// myarrya = append(myarrya, themhr)
+				myarrya[title] = themhr
+				fmt.Println(title)
+				fmt.Println(themhr)
+			}
+		})
+	c.Visit("https://fishki.net")
+	return myarrya
+}
+func runHttp3(visit string) []string {
 	myarray := []string{}
 	c := colly.NewCollector(colly.AllowedDomains("fishki.net"))
 
@@ -23,22 +42,29 @@ func runHttp3() []string {
 		fmt.Println(e.Text)
 	})
 
+	c.OnHTML(".paragraph",
+		func(e *colly.HTMLElement) {
+			prgph := e.Text
+			fmt.Println(prgph)
+			fmt.Println("+++++++++")
+		})
+
 	c.OnHTML(".picture-relative",
 		func(e *colly.HTMLElement) {
-			// title := e.ChildText(".paragraph  ")
-			title := e.ChildAttr("a", "href")
-			// price := e.Text
-			// price := e.ChildAttr("img", "href")
-			// price := e.ChildText("img")
-			fmt.Println(title)
-			// fmt.Println(price)
-			if strings.Contains(title, ".jpg") || strings.Contains(title, ".png") {
-				myarray = append(myarray, title)
+			adrw := e.ChildAttr("a", "href")
+			themw := e.ChildAttr("img", "alt")
+			fmt.Println(adrw)
+			fmt.Println(themw)
+			if strings.Contains(adrw, ".jpg") || strings.Contains(adrw, ".png") {
+				myarray = append(myarray, adrw)
+			} else if strings.Contains(adrw, ".html") {
+				myarray = append(myarray, "https://fishki.net"+adrw)
+
 			}
 		})
 
-	c.Visit("https://fishki.net/4340823-i-smeh-i-greh-ili-tipichnye-rabochie-budni-posle-dlinnyh-vyhodnyh.html")
-	// printimg(images1, site)
-	// drawinghttp(images1, site)
+	c.Visit("https://fishki.net" + visit)
+	// c.Visit("https://fishki.net/4340725-zachem-nuzhny-byli-chepchiki-dlja-sna.html")
+
 	return myarray
 }
