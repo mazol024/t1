@@ -23,10 +23,6 @@ require (
 	github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6 // indirect
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20211213063430-748e38ca8aec // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
-<<<<<<< HEAD
-	github.com/gocolly/colly v1.2.0 // indirect
-=======
->>>>>>> ec8a56e6a5f37d5c802b724581f71b1b7dd17b9a
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/goki/freetype v0.0.0-20181231101311-fa8a33aabaff // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
