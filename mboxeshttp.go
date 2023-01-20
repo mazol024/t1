@@ -47,6 +47,7 @@ var w fyne.Window
 var imgp []fyne.CanvasObject
 var img1 *canvas.Image
 var contentm *CustomImagem
+var scroll1 *container.Scroll
 var contentall *fyne.Container
 var contentlist *fyne.Container
 var contenLast *container.Split
@@ -76,6 +77,8 @@ func main() {
 		fmt.Println("Choosen", indexS)
 
 		images := runHttp3(indexS)
+		w.Content().Refresh()
+
 		imgp := []fyne.CanvasObject{}
 		for n, i := range images {
 			img1 := canvas.NewImageFromURI(storage.NewURI(i))
@@ -89,7 +92,7 @@ func main() {
 		}
 		contentall = nil
 		contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp[:]...)
-		scroll1 := container.NewScroll(contentall)
+		scroll1 = container.NewScroll(contentall)
 		scroll1.SetMinSize(fyne.Size{980, 640})
 		contenLast = nil
 		contenLast = container.NewVSplit(contentlist, scroll1)
@@ -100,21 +103,22 @@ func main() {
 
 	contentlist = container.New(layout.NewVBoxLayout(), selectEntry1)
 
-	images = runHttp3(indexS)
-	imgp1 := []fyne.CanvasObject{}
-	for n, i := range images {
-		img1 = canvas.NewImageFromURI(storage.NewURI(i))
-		img1.SetMinSize(fyne.Size{64, 64})
-		box := widget.NewCard("", "#"+strconv.Itoa(n), img1)
-		contentm = &CustomImagem{*box, i}
-		imgp1 = append(imgp1, contentm)
-		if n == 20 {
-			break
-		}
-	}
+	// images = runHttp3(indexS)
+	// imgp1 := []fyne.CanvasObject{}
+	// for n, i := range images {
+	// 	img1 = canvas.NewImageFromURI(storage.NewURI(i))
+	// 	img1.SetMinSize(fyne.Size{64, 64})
+	// 	box := widget.NewCard("", "#"+strconv.Itoa(n), img1)
+	// 	contentm = &CustomImagem{*box, i}
+	// 	imgp1 = append(imgp1, contentm)
+	// 	if n == 20 {
+	// 		break
+	// 	}
+	// }
 
-	contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp1[:]...)
-	scroll1 := container.NewScroll(contentall)
+	// contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp1[:]...)
+	contentall = container.NewGridWrap(fyne.Size{320, 320})
+	scroll1 = container.NewScroll(contentall)
 	scroll1.SetMinSize(fyne.Size{980, 640})
 	contenLast = container.NewVSplit(contentlist, scroll1)
 	contentlist.Show()
