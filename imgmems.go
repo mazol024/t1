@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"strconv"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -64,18 +64,21 @@ func main() {
 	}
 	selectEntry1 := widget.NewSelect(keys, func(s string) {
 		indexS = urls[s]
-		fmt.Println("Choosen", indexS)
+		// fmt.Println("Choosen", indexS)
 
 		images := runHttp3(indexS)
 		w.Content().Refresh()
 
 		imgp := []fyne.CanvasObject{}
 		for n, i := range images {
-			imgp = append(imgp, loadImage(storage.NewURI(i)))
-			if n == 20 {
-				break
-			}
+			box := widget.NewCard("", "#"+strconv.Itoa(n), loadImage(storage.NewURI(i)))
+			contentm := &CustomImagem{*box, i}
+			imgp = append(imgp, contentm)
+			// if n == 20 {
+			// 	break
+			// }
 		}
+		go doLoadImages()
 		contentall = nil
 		contentall = container.NewGridWrap(fyne.Size{320, 320}, imgp[:]...)
 		scroll1 = container.NewScroll(contentall)
@@ -98,15 +101,17 @@ func main() {
 	w.Resize(fyne.Size{980, 720})
 	w.RequestFocus()
 	w.Content().Refresh()
-	doLoadImages()
 	w.ShowAndRun()
 
 }
-func showPic22(i string) {
+func showPic(i string) {
+
+	// fmt.Println(" Dialog started ...")
 	img2 := canvas.NewImageFromURI(storage.NewURI(i))
 	d := dialog.NewCustom(i, "Close", img2, w)
 	img2.FillMode = canvas.ImageFillOriginal
 	d.Resize(fyne.Size{1200, 980})
 	d.Show()
+	d.Refresh()
 	w.RequestFocus()
 }

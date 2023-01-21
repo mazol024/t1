@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"image"
 	"log"
 
@@ -22,7 +21,8 @@ var uriarray = []fyne.URI{
 }
 
 var loads = make(chan bgImageLoad, 1024)
-var w22 fyne.Window
+
+// var w2 fyne.Window
 
 func loadImage(u fyne.URI) fyne.CanvasObject {
 	img := canvas.NewImageFromResource(nil)
@@ -47,15 +47,15 @@ func doLoadImage(u fyne.URI, img *canvas.Image) {
 	}
 	img.Image = raw
 	img.Refresh()
-	fmt.Println(" Loaded and refreshed ....")
-	w22.Content().Refresh()
+	// fmt.Println(" Loaded and refreshed ....")
+	w.Content().Refresh()
 }
 
 func doLoadImages() {
-	fmt.Println("Start routine ... .")
+	// fmt.Println("Start routine ... .")
 	for load := range loads {
-		fmt.Println("Cycling inside ...")
-		fmt.Println("load.uri -> ", load.uri, "load.img -> ", load.img)
+		// fmt.Println("Cycling inside ...")
+		// fmt.Println("load.uri -> ", load.uri, "load.img -> ", load.img)
 
 		doLoadImage(load.uri, load.img)
 	}
