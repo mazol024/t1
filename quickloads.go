@@ -6,9 +6,7 @@ import (
 	"log"
 
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/storage"
 )
 
@@ -24,7 +22,7 @@ var uriarray = []fyne.URI{
 }
 
 var loads = make(chan bgImageLoad, 1024)
-var w fyne.Window
+var w22 fyne.Window
 
 func loadImage(u fyne.URI) fyne.CanvasObject {
 	img := canvas.NewImageFromResource(nil)
@@ -50,7 +48,7 @@ func doLoadImage(u fyne.URI, img *canvas.Image) {
 	img.Image = raw
 	img.Refresh()
 	fmt.Println(" Loaded and refreshed ....")
-	w.Content().Refresh()
+	w22.Content().Refresh()
 }
 
 func doLoadImages() {
@@ -68,15 +66,15 @@ func doLoadImages() {
 // 		resize.Lanczos3)
 // }
 
-func main() {
+// func main() {
 
-	appm := app.New()
-	w = appm.NewWindow("App")
-	contentall := container.NewGridWrap(fyne.Size{380, 380}, loadImage(uriarray[0]), loadImage(uriarray[1]), loadImage(uriarray[2]))
-	w.SetContent(contentall)
-	w.Resize(fyne.Size{980, 720})
-	w.RequestFocus()
-	w.Content().Refresh()
-	go doLoadImages()
-	w.ShowAndRun()
-}
+// 	appm := app.New()
+// 	w2 = appm.NewWindow("App")
+// 	contentall := container.NewGridWrap(fyne.Size{380, 380}, loadImage(uriarray[0]), loadImage(uriarray[1]), loadImage(uriarray[2]))
+// 	w2.SetContent(contentall)
+// 	w2.Resize(fyne.Size{980, 720})
+// 	w2.RequestFocus()
+// 	w2.Content().Refresh()
+// 	go doLoadImages()
+// 	w2.ShowAndRun()
+// }
