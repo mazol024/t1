@@ -64,7 +64,6 @@ func main() {
 	}
 	selectEntry1 := widget.NewSelect(keys, func(s string) {
 		indexS = urls[s]
-		// fmt.Println("Choosen", indexS)
 
 		images := runHttp3(indexS)
 		w.Content().Refresh()
@@ -74,9 +73,6 @@ func main() {
 			box := widget.NewCard("", "#"+strconv.Itoa(n), loadImage(storage.NewURI(i)))
 			contentm := &CustomImagem{*box, i}
 			imgp = append(imgp, contentm)
-			// if n == 20 {
-			// 	break
-			// }
 		}
 		go doLoadImages()
 		contentall = nil
@@ -105,8 +101,6 @@ func main() {
 
 }
 func showPic(i string) {
-
-	// fmt.Println(" Dialog started ...")
 	img2 := canvas.NewImageFromURI(storage.NewURI(i))
 	d := dialog.NewCustom(i, "Close", img2, w)
 	img2.FillMode = canvas.ImageFillOriginal

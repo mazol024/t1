@@ -14,15 +14,7 @@ type bgImageLoad struct {
 	img *canvas.Image
 }
 
-var uriarray = []fyne.URI{
-	storage.NewURI("https://cdn.fishki.net/upload/post/2023/01/20/4342685/8cf6c3d577fef2bfa31987d1ff1c7798.jpg"),
-	storage.NewURI("https://cdn.fishki.net/upload/post/2023/01/20/4342685/75fd75e212a88ae8138cad4834ae6d06.jpg"),
-	storage.NewURI("https://cdn.fishki.net/upload/post/2023/01/20/4342685/5efeb0a414b0a0db0725302c5ecfd7b9.jpg"),
-}
-
 var loads = make(chan bgImageLoad, 1024)
-
-// var w2 fyne.Window
 
 func loadImage(u fyne.URI) fyne.CanvasObject {
 	img := canvas.NewImageFromResource(nil)
@@ -56,25 +48,6 @@ func doLoadImages() {
 	for load := range loads {
 		// fmt.Println("Cycling inside ...")
 		// fmt.Println("load.uri -> ", load.uri, "load.img -> ", load.img)
-
 		doLoadImage(load.uri, load.img)
 	}
 }
-
-// func scaleImage(img image.Image) image.Image {
-// 	return resize.Thumbnail(320, 240, img,
-// 		resize.Lanczos3)
-// }
-
-// func main() {
-
-// 	appm := app.New()
-// 	w2 = appm.NewWindow("App")
-// 	contentall := container.NewGridWrap(fyne.Size{380, 380}, loadImage(uriarray[0]), loadImage(uriarray[1]), loadImage(uriarray[2]))
-// 	w2.SetContent(contentall)
-// 	w2.Resize(fyne.Size{980, 720})
-// 	w2.RequestFocus()
-// 	w2.Content().Refresh()
-// 	go doLoadImages()
-// 	w2.ShowAndRun()
-// }
