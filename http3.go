@@ -9,7 +9,6 @@ import (
 
 func getThemes() map[string]string {
 	myarrya := map[string]string{}
-	// myarrya := []string{}
 	c := colly.NewCollector(colly.AllowedDomains("fishki.net"))
 
 	c.OnHTML(".content__title",
@@ -18,8 +17,6 @@ func getThemes() map[string]string {
 			themhr := e.ChildAttr("a", "href")
 			if strings.Contains(themhr, "html") {
 				if strings.Contains(title, "мем") || strings.Contains(title, "ляп") || strings.Contains(title, "сетей") || strings.Contains(title, "солянка") || strings.Contains(title, "юмор") || strings.Contains(title, "смешн") {
-
-					// myarrya = append(myarrya, themhr)
 					myarrya[title] = themhr
 					fmt.Println(title)
 					fmt.Println(themhr)
@@ -67,7 +64,5 @@ func runHttp3(visit string) []string {
 		})
 
 	c.Visit("https://fishki.net" + visit)
-	// c.Visit("https://fishki.net/4340725-zachem-nuzhny-byli-chepchiki-dlja-sna.html")
-
 	return myarray
 }
