@@ -17,7 +17,7 @@ func getThemes() map[string]string {
 			title := e.ChildText("a")
 			themhr := e.ChildAttr("a", "href")
 			if strings.Contains(themhr, "html") {
-				if strings.Contains(title, "мем") || strings.Contains(title, "ляп") || strings.Contains(title, "сетей") || strings.Contains(title, "солянка") {
+				if strings.Contains(title, "мем") || strings.Contains(title, "ляп") || strings.Contains(title, "сетей") || strings.Contains(title, "солянка") || strings.Contains(title, "юмор") || strings.Contains(title, "смешн") {
 
 					// myarrya = append(myarrya, themhr)
 					myarrya[title] = themhr
