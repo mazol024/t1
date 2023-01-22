@@ -17,10 +17,13 @@ func getThemes() map[string]string {
 			title := e.ChildText("a")
 			themhr := e.ChildAttr("a", "href")
 			if strings.Contains(themhr, "html") {
-				// myarrya = append(myarrya, themhr)
-				myarrya[title] = themhr
-				fmt.Println(title)
-				fmt.Println(themhr)
+				if strings.Contains(title, "мем") || strings.Contains(title, "ляп") || strings.Contains(title, "сетей") || strings.Contains(title, "солянка") {
+
+					// myarrya = append(myarrya, themhr)
+					myarrya[title] = themhr
+					fmt.Println(title)
+					fmt.Println(themhr)
+				}
 			}
 		})
 	c.Visit("https://fishki.net")

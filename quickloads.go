@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"image"
+	"image/jpeg"
 	"log"
+	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -47,6 +50,11 @@ func doLoadImage(u fyne.URI, img *canvas.Image) {
 	}
 	img.Image = raw
 	img.Refresh()
+	wr, err := storage.Writer(storage.NewFileURI("c:/img/" + u.String()[strings.LastIndex(u.String(), "/"):]))
+	defer wr.Close()
+	buf := new(bytes.Buffer)
+	jpeg.Encode(buf, img.Image, nil)
+	wr.Write(buf.Bytes())
 	// fmt.Println(" Loaded and refreshed ....")
 	w.Content().Refresh()
 }
