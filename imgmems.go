@@ -23,14 +23,6 @@ func (img *CustomImagem) Tapped(ev *fyne.PointEvent) {
 	// fmt.Println("Tapped x= ", ev.AbsolutePosition.X, "  y= ", ev.AbsolutePosition.Y)
 	// fmt.Println("You choose: ", img.Subtitle)
 	showPic(img)
-	// showPic(img.Subtitle)
-	// w.Canvas().Content().Refresh()
-	// contentall = nil
-	// contentall.Refresh()
-	contentall.Refresh()
-	contenLast.Refresh()
-	// w.Content().Refresh()
-
 }
 func (img *CustomImagem) MouseIn(*desktop.MouseEvent) {
 	// fmt.Println("Entered", img.Title, img.Subtitle)
@@ -47,6 +39,9 @@ func (img *CustomImagem) MouseMoved(*desktop.MouseEvent) {
 var images []string
 var appm fyne.App
 var w fyne.Window
+
+// var imgp []CustomImagem
+
 var imgp []fyne.CanvasObject
 var img1 *canvas.Image
 var contentm *CustomImagem
@@ -70,12 +65,7 @@ func main() {
 		indexS = urls[s]
 
 		images := runHttp3(indexS)
-		w.Content().Refresh()
-
-		imgp := []fyne.CanvasObject{}
-		contentall = nil
-		// contentlist = nil
-		contenLast = nil
+		imgp = []fyne.CanvasObject{}
 		for n, i := range images {
 			box := widget.NewCard("", "#"+strconv.Itoa(n), loadImage(storage.NewURI(i)))
 			contentm := &CustomImagem{*box, i}
@@ -85,36 +75,38 @@ func main() {
 		scroll1 = container.NewScroll(contentall)
 		scroll1.SetMinSize(fyne.Size{980, 640})
 		contenLast = container.NewVSplit(contentlist, scroll1)
-		contenLast.Show()
 		w.SetContent(contenLast)
 		w.Content().Refresh()
 	})
 
-	contentall = nil
-	contentlist = nil
-	contenLast = nil
 	contentlist = container.New(layout.NewVBoxLayout(), selectEntry1)
 	contentall = container.NewGridWrap(fyne.Size{160, 160})
 	scroll1 = container.NewScroll(contentall)
 	scroll1.SetMinSize(fyne.Size{980, 640})
 	contenLast = container.NewVSplit(contentlist, scroll1)
-	contentlist.Show()
 	w.SetContent(contenLast)
 	w.Resize(fyne.Size{980, 720})
-	w.RequestFocus()
 	w.Content().Refresh()
+	w.RequestFocus()
 	go doLoadImages()
 	w.ShowAndRun()
 
 }
 func showPic(img24 *CustomImagem) {
-	// func showPic(i string) {
-	// img2 := canvas.NewImageFromURI(storage.NewURI(i))
-	// d := dialog.NewCustom(i, "Close", img2, w)
-	d := dialog.NewCustom("#", "Close", &img24.Card, w)
-	// img2.FillMode = canvas.ImageFillOriginal
+	vv := &img24.Card
+	pos := vv.Position()
+	ss := vv.Size()
+	d := dialog.NewCustom("#", "Close", vv, w)
 	d.Resize(fyne.Size{980, 720})
 	d.Show()
-	d.Refresh()
-	d.SetOnClosed(contentall.Refresh)
+	d.SetOnClosed(func() {
+		vv.Resize(ss)
+		vv.Move(pos)
+		contentall = container.NewGridWrap(fyne.Size{160, 160}, imgp[:]...)
+		scroll1 = container.NewScroll(contentall)
+		scroll1.SetMinSize(fyne.Size{980, 640})
+		contenLast = container.NewVSplit(contentlist, scroll1)
+		w.SetContent(contenLast)
+		w.Content().Refresh()
+	})
 }
