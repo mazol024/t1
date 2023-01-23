@@ -40,7 +40,6 @@ func doLoadImage(u fyne.URI, img *canvas.Image) {
 	img.Image = raw
 	img.Refresh()
 	// fmt.Println(" Loaded and refreshed ....")
-	w.Content().Refresh()
 }
 
 func doLoadImages() {
@@ -49,5 +48,7 @@ func doLoadImages() {
 		// fmt.Println("Cycling inside ...")
 		// fmt.Println("load.uri -> ", load.uri, "load.img -> ", load.img)
 		doLoadImage(load.uri, load.img)
+
 	}
+	w.Content().Refresh()
 }
