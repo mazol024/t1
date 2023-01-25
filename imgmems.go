@@ -68,7 +68,7 @@ func main() {
 		imgp = []fyne.CanvasObject{}
 		for n, i := range images {
 			box := widget.NewCard("", "#"+strconv.Itoa(n), loadImage(storage.NewURI(i)))
-			box.Resize(fyne.Size{480, 480})
+			box.Resize(fyne.Size{320, 320})
 			contentm := &CustomImagem{*box, i}
 			// contentm.Resize(fyne.Size{320, 320})
 			imgp = append(imgp, contentm)
@@ -90,6 +90,7 @@ func main() {
 	w.Resize(fyne.Size{980, 720})
 	w.Content().Refresh()
 	w.RequestFocus()
+	// doLoadImages()
 	go doLoadImages()
 	w.ShowAndRun()
 
@@ -102,11 +103,11 @@ func showPic(img24 *CustomImagem) {
 	ss := vv.Size()
 	// bigimg := container.NewCenter(img24)
 	bigimg := container.NewMax(img24)
-	bigimg.Resize(fyne.Size{1980, 1020})
+	bigimg.Resize(fyne.Size{980, 720})
 	// img24.Resize(fyne.Size{1980, 1020})
 	d := dialog.NewCustom("", "Close", bigimg, w)
 	// d := dialog.NewCustom("", "Close", img24, w)
-	d.Resize(fyne.Size{1980, 1020})
+	d.Resize(fyne.Size{980, 720})
 	d.Show()
 	// d.Refresh()
 	// w.Content().Refresh()

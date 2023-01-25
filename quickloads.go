@@ -47,7 +47,8 @@ func doLoadImages() {
 	for load := range loads {
 		// fmt.Println("Cycling inside ...")
 		// fmt.Println("load.uri -> ", load.uri, "load.img -> ", load.img)
-		doLoadImage(load.uri, load.img)
+		go doLoadImage(load.uri, load.img)
+		// doLoadImage(load.uri, load.img)
 
 	}
 	w.Content().Refresh()
