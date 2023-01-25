@@ -14,12 +14,12 @@ type bgImageLoad struct {
 	img *canvas.Image
 }
 
-var loads = make(chan bgImageLoad, 1024)
+var loads = make(chan bgImageLoad, 2048)
 
 func loadImage(u fyne.URI) fyne.CanvasObject {
 	img := canvas.NewImageFromResource(nil)
 	img.FillMode = canvas.ImageFillContain
-	img.SetMinSize(fyne.Size{320, 320})
+	img.SetMinSize(fyne.Size{480, 480})
 
 	loads <- bgImageLoad{u, img}
 	return img

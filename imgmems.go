@@ -68,7 +68,7 @@ func main() {
 		imgp = []fyne.CanvasObject{}
 		for n, i := range images {
 			box := widget.NewCard("", "#"+strconv.Itoa(n), loadImage(storage.NewURI(i)))
-			box.Resize(fyne.Size{320, 320})
+			box.Resize(fyne.Size{480, 480})
 			contentm := &CustomImagem{*box, i}
 			// contentm.Resize(fyne.Size{320, 320})
 			imgp = append(imgp, contentm)
@@ -100,14 +100,16 @@ func showPic(img24 *CustomImagem) {
 	// vv := &img24.Card
 	pos := vv.Position()
 	ss := vv.Size()
+	// bigimg := container.NewCenter(img24)
 	bigimg := container.NewMax(img24)
-	img24.Resize(fyne.Size{1980, 1020})
+	bigimg.Resize(fyne.Size{1980, 1020})
+	// img24.Resize(fyne.Size{1980, 1020})
 	d := dialog.NewCustom("", "Close", bigimg, w)
 	// d := dialog.NewCustom("", "Close", img24, w)
-	d.Resize(fyne.Size{980, 720})
+	d.Resize(fyne.Size{1980, 1020})
 	d.Show()
-	d.Refresh()
-	w.Content().Refresh()
+	// d.Refresh()
+	// w.Content().Refresh()
 	d.SetOnClosed(func() {
 		vv.Resize(ss)
 		vv.Move(pos)
@@ -116,6 +118,6 @@ func showPic(img24 *CustomImagem) {
 		scroll1.SetMinSize(fyne.Size{980, 640})
 		contenLast = container.NewVSplit(contentlist, scroll1)
 		w.SetContent(contenLast)
-		w.Content().Refresh()
+		// w.Content().Refresh()
 	})
 }
